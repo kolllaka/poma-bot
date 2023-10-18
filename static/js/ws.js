@@ -13,9 +13,6 @@ function connectWS() {
 		console.log(`[message] ${msgStruct.name}`);
 		// обработчик
 		aug.change(msgStruct)
-		setTimeout(() => {
-			aug.destroy();
-		}, 6000)
 	};
 
 	socket.onclose = function (event) {

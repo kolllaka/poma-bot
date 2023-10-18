@@ -14,6 +14,9 @@ class Augury {
 		const video = this.$el.querySelector(".augury__source").querySelector("video")
 		video.src = options.link
 		video.play()
+		video.addEventListener('ended', (e) => {
+			aug.destroy()
+		})
 
 		this.$el.querySelector(".augury__title").innerHTML = options.name
 		this.$el.style.display = "block"
