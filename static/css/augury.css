@@ -1,0 +1,13 @@
+.augury__body {
+  padding: 20px;
+  margin: auto;
+}
+.augury__title {
+  font-size: 40px;
+  color: red;
+  text-align: center;
+}
+.augury__source {
+  display: flex;
+  justify-content: center;
+}

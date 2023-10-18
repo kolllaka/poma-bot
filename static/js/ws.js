@@ -1,0 +1,40 @@
+const aug = new Augury("aug");
+
+function connectWS() {
+	const WEBSOCKET = 'ws://127.0.0.1:8080/aug/ws'
+	let socket = new WebSocket(WEBSOCKET);
+
+	socket.onopen = function (e) {
+		console.log(`ws conn open to  ${WEBSOCKET}`);
+	};
+
+	socket.onmessage = function (e) {
+		msgStruct = JSON.parse(e.data)
+		console.log(`[message] ${msgStruct.name}`);
+		// обработчик
+		aug.change(msgStruct)
+		setTimeout(() => {
+			aug.destroy();
+		}, 6000)
+	};
+
+	socket.onclose = function (event) {
+		if (event.wasClean) {
+			console.log(`[close] Соединение закрыто чисто, код=${event.code} причина=${event.reason}`);
+		} else {
+			// например, сервер убил процесс или сеть недоступна
+			// обычно в этом случае event.code 1006
+			console.log('[close ws] Соединение прервано');
+		}
+
+		setTimeout(function () {
+			connectWS();
+		}, 1000);
+	};
+
+	socket.onerror = function (error) {
+		console.log(`[error] ${error}`);
+		socket.close();
+	};
+}
+connectWS();
